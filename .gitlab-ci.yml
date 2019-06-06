@@ -3,20 +3,19 @@ variables:
  ENV_VAR_1: "I'm an environment variable"
  ENV_VAR_2: "You get the picture"
  
-# These are magic variables. They will be used by Postgres/Docker to do our initial database setup. The keys must be named as follows. You can change the values as you see fit.
+ # These are magic variables. They will be used by Postgres/Docker to do our initial database setup. The keys must be named as follows. You can change the values as you see fit.
  POSTGRES_DB: 'database_name'
  POSTGRES_USER: 'postgres'
  POSTGRES_PASSWORD: 'postgres'
 
-# This lets the Gitlab runner know we want a Docker image of the latest Postgres version to be installed.
+ # This lets the Gitlab runner know we want a Docker image of the latest Postgres version to be installed.
 services:
  - postgres:latest
 
 # These paths will be cached in between test runs. Very useful for reducing the build time.
 cache:
  paths:
- 
-# This took some trial and error to figure out.
+ # This took some trial and error to figure out.
   - ~/.cache/pip/
 
 # This runs before the unit_tests task and should do any miscellaneous setup that's needed.
@@ -25,19 +24,16 @@ before_script:
 
 # The main task to run your tests.
 unit_tests:
- 
-# This imports the Docker image for Python. Useful so you don't have to do any Python setup manually.
+ # This imports the Docker image for Python. Useful so you don't have to do any Python setup manually.
  image: python:3.7
 
-# These are environment variables you can specify local to the unit_tests task.
+ # These are environment variables you can specify local to the unit_tests task.
  variables:
-
-# If you changed the POSTGRES_* values in the global environment variables section you will also need to modify this string.
+  # If you changed the POSTGRES_* values in the global environment variables section you will also need to modify this string.
   DATABASE_URL: "postgresql://organic:Qazwsx12@postgres:5432/medicalai"
   
-# Command line commands to run your tests and generate coverage reports.
- 
-# With Django these are run through the manage.py file. You should change this section as if you're running the tests from the command line.
+ # Command line commands to run your tests and generate coverage reports.
+ # With Django these are run through the manage.py file. You should change this section as if you're running the tests from the command line.
 script:
   - echo "Running unit tests…"
   - cd src/medicalai/
@@ -45,6 +41,5 @@ script:
   - python manage.py create_model_dummies --settings=medicalai.settings.ci
   - coverage run --source='.' manage.py test --settings=medicalai.settings.ci
   - coverage report
- 
-# This regex will pull out the line coverage from the coverage report output so it will be displayed in the job page on Gitlab.
+ # This regex will pull out the line coverage from the coverage report output so it will be displayed in the job page on Gitlab.
  coverage: '/^TOTAL.*\s+(\d+\%)$/'
