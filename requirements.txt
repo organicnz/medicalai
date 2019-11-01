@@ -69,4 +69,4 @@ terminado==0.8.1
 testpath==0.3.1
 tf-estimator-nightly==1.14.0.dev2019030115
 webencodings==0.5.1
-Werkzeug==0.15.1
+Werkzeug==0.15.3
