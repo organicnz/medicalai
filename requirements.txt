@@ -4,7 +4,7 @@ astor==0.7.1
 atomicwrites==1.3.0
 attrs==19.1.0
 backports.weakref==1.0.post1
-bleach==2.1.4
+bleach==3.3.0
 cli50==2.0.0
 Click==7.0
 configparser==3.5.0
